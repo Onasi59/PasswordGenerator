@@ -1,4 +1,4 @@
-# PasswordGenerator.py
+
 """
 Simple but secure password generator.
 Uses the `secrets` module for cryptographic randomness and `string` for character sets.
@@ -7,9 +7,9 @@ Uses the `secrets` module for cryptographic randomness and `string` for characte
 import string
 import secrets
 import sys
-import random  # used for shuffling with SystemRandom
+import random  # used for shuffling 
 
-# SystemRandom uses os.urandom under the hood (good for secure randomness).
+
 _sysrand = random.SystemRandom()
 
 
@@ -28,7 +28,7 @@ def build_charset(use_lower=True, use_upper=True, use_digits=True, use_symbols=T
         classes["digits"] = string.digits
         pool += string.digits
     if use_symbols:
-        # Basic symbols without spaces; trimmed to avoid shell quoting issues in some terminals
+        
         classes["symbols"] = "!@#$%^&*()-_=+[]{};:,.<>/?"
         pool += classes["symbols"]
 
@@ -46,14 +46,14 @@ def generate_password(length, classes, pool):
     if length < len(classes):
         raise ValueError(f"Length must be at least {len(classes)} to include one of each selected type.")
 
-    # Start with one guaranteed char from each selected class
+   
     password_chars = [secrets.choice(chars) for chars in classes.values()]
 
-    # Fill the rest with secure random choices from full pool
+   
     remaining = length - len(password_chars)
     password_chars += [secrets.choice(pool) for _ in range(remaining)]
 
-    # Shuffle using SystemRandom to avoid order predictability
+    
     _sysrand.shuffle(password_chars)
 
     return "".join(password_chars)
@@ -119,7 +119,7 @@ def main():
             return
         print(pwd)
 
-    # Optional: try to copy last password to clipboard using pyperclip if available
+    
     copy_ok = False
     try:
         import pyperclip
